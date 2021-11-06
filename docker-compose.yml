@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  vsal:
+    container_name: vsal
+    image: vsal.garvan.org.au:5000/vsal:kudu
+    network_mode: "host"
+
+  clindata:
+    container_name: clindata
+    image: vsal.garvan.org.au:5000/clindata:0
+    networks:
+      - nw_clindb
+    ports:
+      - 4080:8080
+
+  clindb:
+    container_name: clindb
+    image: vsal.garvan.org.au:5000/clindb:1140
+    networks:
+      - nw_clindb
+    ports:
+      - 3306:3306
+
+networks:
+  nw_clindb:
+    driver: bridge
